@@ -1,0 +1,24 @@
+extends layout.pug
+
+block content
+    section#content
+    h2 campaign
+    form(action="/admin/addcampaign",method="post",enctype="multipart/form-data")
+        div
+            label Product id
+                input(type="text",name="productId",placeholder="Product id" required)
+        h3 Image Upload
+        div
+            label Main image
+                div
+                    input(type="file",name="mainImage")
+        div
+            label Other images
+                div
+                    input(type="file",name="images",multiple)
+        div
+            label Story
+                div
+                    textarea(name="story",placeholder="Product multiline story")
+        button(type="submit") Submit
+        button(type="reset") Reset

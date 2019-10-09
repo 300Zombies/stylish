@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stylish</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <!-- local reference route depends on app.use(express.static('public')); -->
+    <link rel="stylesheet" href="./css/profile.css">
+
+</head>
+
+<body onload="init()">
+    <nav>
+        <div class="nav-left">
+            <a href="/index.html">
+                <div class="logo"></div>
+            </a>
+            <ul class="category">
+                <li class="cate-1">女裝</li>
+                <li style="width:50px">|</li>
+                <li class="cate-2">男裝</li>
+                <li style="width:50px">|</li>
+                <li class="cate-3">配件</li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="search">
+
+            </div>
+            <div class="cart"></div>
+            <a href="/profile.html">
+                <div class="login"></div>
+            </a>
+        </div>
+    </nav>
+    <section class="charcoal-grey"></section>
+    <section class="profile-section">
+        <div class="profile-container">
+            <div class="sign-form">
+                <div>
+                    <label>
+                        <input id="name" name="name" placeholder="user name">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="email" id="email" name="email" placeholder="user email" required>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="password" id="password" name="password" placeholder="password" required>
+                    </label>
+                </div>
+                <button type="button" onclick="signUp()">Sign Up</button>
+                <button type="button" onclick="signIn()">Sign In</button>
+                <p class="message"></p>
+                <br>
+                <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                </fb:login-button>
+                <div id="status"></div>
+
+            </div>
+            <div class="user-info">
+                <div class="picture"></div>
+                <p class="greeting"></p>
+                <button type="button" onclick="logout()">logout</button>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-wrap">
+            <ul class="footer-left">
+                <li>關於 Stylish</li>
+                <li style="width:5px; margin-left:25px; margin-right: 15px">|</li>
+                <li>服務條款</li>
+                <li class="break">|</li>
+                <li>隱私政策</li>
+                <li class="break">|</li>
+                <li>聯絡我們</li>
+                <li class="break">|</li>
+                <li>FAQ</li>
+            </ul>
+            <ul class="footer-right">
+                <li class="line"></li>
+                <li class="twitter"></li>
+                <li class="facebook"></li>
+                <li class="copy-right">&copy; 2019. Allrights reserved</li>
+            </ul>
+        </div>
+    </footer>
+    <!-- <script src="../public/javascript/script.js"></script> -->
+    <script>
+        async function init() {
+            // after page loaded check if user is signed in
+            const accessToken = localStorage.getItem("access_token");
+            const signForm = document.querySelector(".sign-form");
+            const userInfo = document.querySelector(".user-info");
+            if (accessToken) {
+                const endPoint = "/user/profile";
+                const options = {
+                    headers: {
+                        "content-type": "application/json",
+                        "authorization": `Bearer ${accessToken}`,
+                    },
+                    method: "POST",
+                }
+                await fetch(endPoint, options)
+                    .then((res) => {
+                        return res.json();
+                    })
+                    .then((result) => {
+                        if (result.data === null) {
+                            localStorage.removeItem("access_token");
+                            signForm.style.display = "block";
+                            userInfo.style.display = "none";
+                        } else {
+                            signForm.style.display = "none";
+                            userInfo.style.display = "block";
+                            const picture = document.querySelector(".picture");
+                            picture.style.backgroundImage = `url(${result.data.user.picture})`;
+                            const greeting = document.querySelector(".greeting");
+                            greeting.textContent = `Hello, ${result.data.user.name}`;
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+
+            } else {
+                signForm.style.display = "block";
+                userInfo.style.display = "none";
+            }
+        }
+
+        async function signUp() {
+            const name = document.querySelector("#name").value;
+            const email = document.querySelector("#email").value;
+            const password = document.querySelector("#password").value;
+            const msg = document.querySelector(".message");
+            if (!name || !email || !password) {
+                msg.textContent = "註冊請填寫所有欄位";
+                return
+            } else {
+                const reqBody = {
+                    name: name,
+                    email: email,
+                    password: password,
+                    provider: "native"
+                }
+                const options = {
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                    method: "POST",
+                    body: JSON.stringify(reqBody)
+                }
+                const endPoint = "/user/signup"
+                // FETCH!!
+                await fetch(endPoint, options)
+                    .then((res) => {
+                        return res.json();
+                    })
+                    .then((result) => {
+                        console.log(result)
+                        if (result.errMsg) {
+                            msg.textContent = result.errMsg;
+                            return
+                        } else {
+                            localStorage.setItem("access_token", result.data["access_token"]);
+                            // display none sign in /up form
+                            const signForm = document.querySelector(".sign-form");
+                            signForm.style.display = "none";
+                            // display user info block
+                            const userInfo = document.querySelector(".user-info");
+                            userInfo.style.display = "block";
+                            const picture = document.querySelector(".picture");
+                            picture.style.backgroundImage = `url(${result.data.user.picture})`;
+                            const greeting = document.querySelector(".greeting");
+                            greeting.textContent = `Hello, ${result.data.user.name}`;
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        }
+        async function signIn() {
+            // const name = document.querySelector("#name").value;
+            const email = document.querySelector("#email").value;
+            const password = document.querySelector("#password").value;
+            const msg = document.querySelector(".message");
+            if (!email || !password) {
+                msg.textContent = "登入請填寫信箱及密碼";
+                return
+            } else {
+                const reqBody = {
+                    email: email,
+                    password: password,
+                    provider: "native"
+                }
+                const options = {
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                    method: "POST",
+                    body: JSON.stringify(reqBody)
+                }
+                const endPoint = "/user/signin"
+                // FETCH!!
+                await fetch(endPoint, options)
+                    .then((res) => {
+                        return res.json();
+                    })
+                    .then((result) => {
+
+                        if (result.errMsg) {
+                            msg.textContent = result.errMsg;
+                            return
+                        } else {
+                            localStorage.setItem("access_token", result.data["access_token"]);
+                            // display none sign in /up form
+                            const signForm = document.querySelector(".sign-form");
+                            signForm.style.display = "none";
+                            // display user info block
+                            const userInfo = document.querySelector(".user-info");
+                            userInfo.style.display = "block";
+                            const picture = document.querySelector(".picture");
+                            picture.style.backgroundImage = `url(${result.data.user.picture})`;
+                            const greeting = document.querySelector(".greeting");
+                            greeting.textContent = `Hello, ${result.data.user.name}`;
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem("access_token");
+            window.location.assign(`http://${window.location.hostname}/profile.html`);
+        }
+        //- This is called with the results from from FB.getLoginStatus().
+        async function statusChangeCallback(response) {
+            console.log('statusChangeCallback');
+            console.log(response);
+            //- The response object is returned with a status field that lets the
+            //- app know the current login status of the person.
+            //- Full docs on the response object can be found in the documentation
+            //- for FB.getLoginStatus().
+            if (response.status === 'connected') {
+                //- Logged into your app and Facebook.
+
+                //- DO THINGS HERE
+                console.log(response.authResponse.accessToken);
+                let data = {
+                    token: response.authResponse.accessToken,
+                    provider: "facebook",
+                }
+                //- SEND REQ BODY TO BACKEND
+                const options = {
+                    headers: {
+                        "content-type": "application/json",
+                    },
+                    method: "POST",
+                    body: JSON.stringify(data)
+                }
+                const endPoint = "/user/signin"
+                // FETCH!!
+                await fetch(endPoint, options)
+                    .then((res) => {
+                        return res.json()
+                    })
+                    .then((result) => {
+                        console.log(result);
+                        const userData = {
+                            name: result.data.user.name,
+                            picture: result.data.user.picture,
+                            token: result.data["access_token"],
+                            tokenExpired: result.data["access_expired"]
+                        }
+                        localStorage.setItem("user", JSON.stringify(userData));
+                        // display none sign in /up form
+                        const signForm = document.querySelector(".sign-form");
+                        signForm.style.display = "none";
+                        // display user info block
+                        const userInfo = document.querySelector(".user-info");
+                        userInfo.style.display = "block";
+                        const picture = document.querySelector(".picture");
+                        picture.style.backgroundImage = `url(${result.data.user.picture})`;
+                        const greeting = document.querySelector(".greeting");
+                        greeting.textContent = `Hello, ${result.data.user.name}`;
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+                //- Do things end
+                testAPI();
+            } else {
+                //- The person is not logged into your app or we are unable to tell.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                    'into this app.';
+            }
+        }
+
+        //- This function is called when someone finishes with the Login
+        //- Button.  See the onlogin handler attached to it in the sample
+        //- code below.
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+        }
+
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '796746667340492',
+                cookie: true, //- enable cookies to allow the server to access 
+                //- the session
+                xfbml: true, //- parse social plugins on this page
+                version: 'v3.3' //- The Graph API version to use for the call
+            });
+
+            //- Now that we've initialized the JavaScript SDK, we call 
+            //- FB.getLoginStatus().  This function gets the state of the
+            //- person visiting this page and can return one of three states to
+            //- the callback you provide.  They can be:
+            //-
+            //- 1. Logged into your app ('connected')
+            //- 2. Logged into Facebook, but not your app ('not_authorized')
+            //- 3. Not logged into Facebook and can't tell if they are logged into
+            //-    your app or not.
+            //-
+            //- These three cases are handled in the callback function.
+
+            FB.getLoginStatus(function (response) {
+                // 取得登入狀態之前先把 cookie 清除(未授權狀態會寫入一個 cookie 導致之後的登入狀態出問題) very important
+                statusChangeCallback(response);
+            });
+
+        };
+
+        //- Load the SDK asynchronously
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        //- Here we run a very simple test of the Graph API after login is
+        //- successful.  See statusChangeCallback() for when this call is made.
+        function testAPI() {
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function (response) {
+                console.log('Successful login for: ' + response.name);
+                document.getElementById('status').innerHTML =
+                    'Thanks for logging in, ' + response.name + '!';
+            });
+        }
+    </script>
+</body>
+
+</html>

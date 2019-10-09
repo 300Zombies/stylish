@@ -1,0 +1,66 @@
+extends layout.pug
+
+block content
+    section#content
+    h2 product
+    form(action="/admin/addproduct",method="post",enctype="multipart/form-data")
+        //- div
+        //-     label Product id
+        //-         input(type="text",name="productId",placeholder="Product id")
+        div
+            label Title
+                input(type="text",name="title",placeholder="Product title")
+        div
+            label Category
+                select(type="text",name="category")
+                    option(value="" disabled selected hidden) Select Category
+                    option(value="women") 女裝
+                    option(value="men") 男裝
+                    option(value="accessories") 配件
+        div
+            label Description
+                div
+                    textarea(name="description",placeholder="Product description")
+        div
+            label Price
+                input(type="number",name="price",placeholder="Product price")
+        div
+            label Texture
+                input(type="text",name="texture",placeholder="Product texture")
+        div
+            label Wash
+                input(type="text",name="wash",placeholder="The way we can wash the product")
+        div
+            label Place
+                input(type="text",name="place",placeholder="Place of production")
+        div
+            label Note
+                div
+                    textarea(name="note",placeholder="The note of produc")
+        div
+            label Story
+                div
+                    textarea(name="story",placeholder="Product multiline story")
+        div
+            label Color Code
+                input(type="text",name="colorCode",placeholder="000000")
+        div
+            label Color Name
+                input(type="text",name="colorName",placeholder="黑色")
+        div
+            label Size
+                input(type="text",name="size",placeholder="M")
+        div
+            label Stock
+                input(type="text",name="stock",placeholder="stock")
+        h3 Image Upload
+        div
+            label Main image
+                div
+                    input(type="file",name="mainImage")
+        div
+            label Other images
+                div
+                    input(type="file",name="images",multiple)
+        button(type="submit") Submit
+        button(type="reset") Reset

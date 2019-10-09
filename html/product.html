@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stylish</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- local reference route depends on app.use(express.static('public')); -->
+    <link rel="stylesheet" href="./css/details.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="/index.html">
+                <div class="logo"></div>
+            </a>
+            <ul class="category">
+                <li class="cate-1">女裝</li>
+                <li style="width:50px">|</li>
+                <li class="cate-2">男裝</li>
+                <li style="width:50px">|</li>
+                <li class="cate-3">配件</li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="search">
+
+            </div>
+            <div class="cart"></div>
+            <a href="/profile.html">
+                <div class="login"></div>
+            </a>
+        </div>
+    </nav>
+    <section class="charcoal-grey"></section>
+    <section class="product-section">
+        <div class="products-container">
+            <div class="main-detail">
+                <div class="main-image"></div>
+                <div class="detail-panel">
+                    <div class="title"></div>
+                    <div class="product-id"></div>
+                    <div class="price"></div>
+                    <div style="height: 1px; background:#3f3a3a; margin:20px 0 34px 0;"></div>
+                    <div class="color-container">
+                        <div class="variants">
+                            顏色
+                        </div>
+                        <!-- <div class="color"></div> -->
+                        <!-- appendChild here -->
+                    </div>
+                    <div class="size-container">
+                        <div class="variants">
+                            尺寸
+                        </div>
+                        <!-- <div class="size">XL</div> -->
+                        <!-- appendChild here -->
+                    </div>
+                    <div class="amount-container">
+                        <div class="variants">
+                            數量
+                        </div>
+                        <div class="amount-panel">
+                            <div class="minus">-</div>
+                            <div class="number"></div>
+                            <div class="plus">+</div>
+                        </div>
+                    </div>
+                    <div class="shop-cart">
+                        <p>加入購物車</p>
+                    </div>
+                    <div class="info">
+                        <div class="note"></div>
+                        <div class="texture"></div>
+                        <div class="place"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="line-break">
+                <p>細部說明</p>
+                <div></div>
+            </div>
+            <div class="images-container">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, nobis.</p>
+                <div class="images0"></div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, nobis?</p>
+                <div class="images1"></div>
+            </div>
+        </div>
+    </section>
+    <section class="checkout">
+        <!-- put checkout here -->
+        <div class="container">
+            <div class="jumbotron">
+                <h1>TapPay Fields Bootstrap Example</h1>
+                <p class="lead">TapPay Fields 是 三個 host 在 TapPay 的網頁，利用 iframe 的方式嵌入商家網頁，提供安全的卡號輸入方式</p>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                </div>
+                <div class="form-group card-number-group">
+                    <label for="card-number" class="control-label"><span id="cardtype"></span>卡號</label>
+                    <div class="form-control card-number"></div>
+                </div>
+                <div class="form-group expiration-date-group">
+                    <label for="expiration-date" class="control-label">卡片到期日</label>
+                    <div class="form-control expiration-date" id="tappay-expiration-date"></div>
+                </div>
+                <div class="form-group cvc-group">
+                    <label for="cvc" class="control-label">卡片後三碼</label>
+                    <div class="form-control cvc"></div>
+                </div>
+                <!-- <div class="form-group">
+                    <label class="control-label">運送方式
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">金額(不含運費)
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">總金額(含運費)
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">收件姓名
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">收件電話
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">收件e-mail
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">送達地址
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">送達時間
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">持卡人手機
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">持卡人姓名
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">持卡人e-mail
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">持卡人郵遞區號
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">持卡人地址
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">持卡人身分證字號
+                        <input class="form-control" disabled></input>
+                    </label>
+                </div> -->
+
+                <button type="submit" class="btn btn-default">Pay</button>
+            </form>
+            <br>
+            <pre class="jumbotron text-left" id="curl">
+                </pre>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-wrap">
+            <ul class="footer-left">
+                <li>關於 Stylish</li>
+                <li style="width:5px; margin-left:25px; margin-right: 15px">|</li>
+                <li>服務條款</li>
+                <li class="break">|</li>
+                <li>隱私政策</li>
+                <li class="break">|</li>
+                <li>聯絡我們</li>
+                <li class="break">|</li>
+                <li>FAQ</li>
+            </ul>
+            <ul class="footer-right">
+                <li class="line"></li>
+                <li class="twitter"></li>
+                <li class="facebook"></li>
+                <li class="copy-right">&copy; 2019. Allrights reserved</li>
+            </ul>
+        </div>
+    </footer>
+    <script src="https://js.tappaysdk.com/tpdirect/v5.1.0"></script>
+    <script>
+        /*** TapPay ***/
+        TPDirect.setupSDK(12348, 'app_pa1pQcKoY22IlnSXq5m5WP5jFKzoRG58VEXpT7wU62ud7mMbDOGzCYIlzzLF', 'sandbox');
+        TPDirect.card.setup({
+            fields: {
+                number: {
+                    element: '.form-control.card-number',
+                    placeholder: '**** **** **** ****'
+                },
+                expirationDate: {
+                    element: document.getElementById('tappay-expiration-date'),
+                    placeholder: 'MM / YY'
+                },
+                ccv: {
+                    element: $('.form-control.cvc')[0],
+                    placeholder: '後三碼'
+                }
+            },
+            styles: {
+                'input': {
+                    'color': 'gray'
+                },
+                'input.ccv': {
+                    // 'font-size': '16px'
+                },
+                ':focus': {
+                    'color': 'black'
+                },
+                '.valid': {
+                    'color': 'green'
+                },
+                '.invalid': {
+                    'color': 'red'
+                },
+                '@media screen and (max-width: 400px)': {
+                    'input': {
+                        'color': 'orange'
+                    }
+                }
+            }
+        })
+        // listen for TapPay Field
+        TPDirect.card.onUpdate(function (update) {
+            /* Disable / enable submit button depend on update.canGetPrime  */
+            /* ============================================================ */
+            // update.canGetPrime === true
+            //     --> you can call TPDirect.card.getPrime()
+            // const submitButton = document.querySelector('button[type="submit"]')
+            if (update.canGetPrime) {
+                // submitButton.removeAttribute('disabled')
+                $('button[type="submit"]').removeAttr('disabled')
+            } else {
+                // submitButton.setAttribute('disabled', true)
+                $('button[type="submit"]').attr('disabled', true)
+            }
+            /* Change card type display when card type change */
+            /* ============================================== */
+            // cardTypes = ['visa', 'mastercard', ...]
+            var newType = update.cardType === 'unknown' ? '' : update.cardType
+            $('#cardtype').text(newType)
+            /* Change form-group style when tappay field status change */
+            /* ======================================================= */
+            // number 欄位是錯誤的
+            if (update.status.number === 2) {
+                setNumberFormGroupToError('.card-number-group')
+            } else if (update.status.number === 0) {
+                setNumberFormGroupToSuccess('.card-number-group')
+            } else {
+                setNumberFormGroupToNormal('.card-number-group')
+            }
+            if (update.status.expiry === 2) {
+                setNumberFormGroupToError('.expiration-date-group')
+            } else if (update.status.expiry === 0) {
+                setNumberFormGroupToSuccess('.expiration-date-group')
+            } else {
+                setNumberFormGroupToNormal('.expiration-date-group')
+            }
+            if (update.status.cvc === 2) {
+                setNumberFormGroupToError('.cvc-group')
+            } else if (update.status.cvc === 0) {
+                setNumberFormGroupToSuccess('.cvc-group')
+            } else {
+                setNumberFormGroupToNormal('.cvc-group')
+            }
+        })
+        $('form').on('submit', function (event) {
+            event.preventDefault()
+
+            // fix keyboard issue in iOS device
+            forceBlurIos()
+
+            const tappayStatus = TPDirect.card.getTappayFieldsStatus()
+            // console.log(tappayStatus)
+            // Check TPDirect.card.getTappayFieldsStatus().canGetPrime before TPDirect.card.getPrime
+            if (tappayStatus.canGetPrime === false) {
+                alert('can not get prime')
+                return
+            }
+            // Get prime
+            TPDirect.card.getPrime(async (result) => {
+                if (result.status !== 0) {
+                    alert('get prime error ' + result.msg)
+                    return
+                }
+                alert('get prime 成功，prime: ' + result.card.prime);
+                // console.log(result.card.prime);
+
+                const list = [{
+                    id: "201807202157",
+                    name: "mechanical parts",
+                    price: 20000,
+                    color: {
+                        code: "dddddd",
+                        name: "metalic grey"
+                    },
+                    size: "L",
+                    qty: 1
+                }];
+                const order = {
+                    shipping: "helicopter",
+                    payment: "credit_card",
+                    subtotal: 20000,
+                    freight: 5000,
+                    total: 25000,
+                    recipient: {
+                        name: "AlphaStar",
+                        phone: 0999999999,
+                        email: "alphastar@skynet.com",
+                        address: "somewhere",
+                        time: "midnight"
+                    },
+                    list
+                }
+                const cardholder = {
+                    phone_number: "+886923456789",
+                    name: "王小明",
+                    email: "LittleMing@Wang.com",
+                    zip_code: "100",
+                    address: "台北市天龍區芝麻街1號1樓",
+                    national_id: "A123456789"
+                }
+                const reqBody = {
+                    order,
+                    partner_key: "partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM",
+                    prime: result.card.prime,
+                    amount: "1",
+                    merchant_id: "AppWorksSchool_CTBC",
+                    details: "Some item",
+                    cardholder
+                }
+                // await callCheckOut(reqBody);
+                // function callCheckOut(request) {
+                //     const xhr = new XMLHttpRequest();
+                //     xhr.open("POST", "/order/checkout");
+                //     xhr.setRequestHeader("content-type", "application/json");
+                //     xhr.setRequestHeader("x-api-key",
+                //         "partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM");
+                //     xhr.onreadystatechange = function () {
+                //         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                //             console.log("交易成功")
+                //         }
+                //     }
+                //     console.log(JSON.stringify(request))
+                //     xhr.send(JSON.stringify(request))
+                // }
+
+                const options = {
+                    headers: {
+                        "content-type": "application/json",
+                        "x-api-key": "partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM",
+                        "authorization": `Bearer ${JSON.parse(localStorage.getItem("user")).token}`, // don't forget to carry token (Mark)
+                    },
+                    method: "POST",
+                    body: JSON.stringify(reqBody)
+                }
+                const endPoint = "/order/checkout"
+                // FETCH!!
+                await fetch(endPoint, options)
+                    .then((res) => {
+                        return res.json();
+                    })
+                    .then((result) => {
+                        console.log(result);
+                        // window.location.assign must assign full url
+                        if (result.status) {
+                            const command = `付款失敗，錯誤代碼${result.status}，${result.msg}`
+                            document.querySelector('#curl').innerHTML = command
+                        } else if (result.data.number) {
+                            console.log(result.data.number)
+                            window.location.assign(
+                                `http://${window.location.hostname}/thankyou.html?number=${result.data.number}`
+                            );
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                // var command = `
+                // Use following command to send to server \n\n
+                // curl -X POST https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime \\
+                // -H 'content-type: application/json' \\
+                // -H 'x-api-key: partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM' \\
+                // -d '{
+                //     "partner_key": "partner_6ID1DoDlaPrfHw6HBZsULfTYtDmWs0q0ZZGKMBpp4YICWBxgK97eK3RM",
+                //     "prime": "${result.card.prime}",
+                //     "amount": "1",
+                //     "merchant_id": "GlobalTesting_CTBC",
+                //     "details": "Some item",
+                //     "cardholder": {
+                //         "phone_number": "+886923456789",
+                //         "name": "王小明",
+                //         "email": "LittleMing@Wang.com",
+                //         "zip_code": "100",
+                //         "address": "台北市天龍區芝麻街1號1樓",
+                //         "national_id": "A123456789"
+                //     }
+                // }'`.replace(/                /g, '')
+                // document.querySelector('#curl').innerHTML = command
+            })
+        })
+
+        function setNumberFormGroupToError(selector) {
+            $(selector).addClass('has-error')
+            $(selector).removeClass('has-success')
+        }
+
+        function setNumberFormGroupToSuccess(selector) {
+            $(selector).removeClass('has-error')
+            $(selector).addClass('has-success')
+        }
+
+        function setNumberFormGroupToNormal(selector) {
+            $(selector).removeClass('has-error')
+            $(selector).removeClass('has-success')
+        }
+
+        function forceBlurIos() {
+            if (!isIos()) {
+                return
+            }
+            var input = document.createElement('input')
+            input.setAttribute('type', 'text')
+            // Insert to active element to ensure scroll lands somewhere relevant
+            document.activeElement.prepend(input)
+            input.focus()
+            input.parentNode.removeChild(input)
+        }
+
+        function isIos() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        }
+
+        // binds two function in get prime btn:
+        // 1. get prime
+        // 2. post prime and card info to back-end api
+        // back-end api will send info to tappay server to process checkout and return order number if success
+        // use query string to carry order number to next page(window.location.href(url?number=123))
+        // if not query string, use cookie or local storage instead
+
+        /*** AJAX API ***/
+        const urlParams = new URLSearchParams(window.location.search); // important!!
+        const productId = urlParams.get("id");
+        const url = `/api/1.0/products/details?id=${productId}`;
+        const container = document.querySelector(".products-container");
+        callProduct();
+
+        function callProduct() {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    const data = JSON.parse(xhr.responseText).data[0]; // aquire obj instead of arr
+                    // console.log(data);
+                    const mainImage = document.querySelector(".main-image");
+                    mainImage.style.backgroundImage = `url(${data["main_image"]})`;
+                    const title = document.querySelector(".title");
+                    title.textContent = data.title;
+                    const productId = document.querySelector(".product-id");
+                    productId.textContent = data.id;
+                    const price = document.querySelector(".price");
+                    price.textContent = `TWD.${data.price}`;
+
+                    const colorContainer = document.querySelector(".color-container");
+                    for (let i = 0; i < data.colors.length; i++) {
+                        const color = document.createElement("div");
+                        color.classList.add("color");
+                        color.style.backgroundColor = `#${data.colors[i]["color_code"]}`;
+                        colorContainer.appendChild(color);
+                    }
+                    const sizeContainer = document.querySelector(".size-container");
+                    for (let i = 0; i < data.sizes.length; i++) {
+                        const size = document.createElement("div");
+                        size.classList.add("size");
+                        size.textContent = data.sizes[i];
+                        sizeContainer.appendChild(size);
+                    }
+                    const number = document.querySelector(".number");
+                    number.textContent = data.variants[0].stock;
+                    const note = document.querySelector(".note");
+                    note.textContent = data.note;
+                    const texture = document.querySelector(".texture");
+                    texture.textContent = `素材產地 / ${data.texture}`;
+                    const place = document.querySelector(".place");
+                    place.textContent = `加工產地 / ${data.place}`;
+                    const image0 = document.querySelector(".images0");
+                    image0.style.backgroundImage = `url(${data.images[0]})`;
+                    const image1 = document.querySelector(".images1");
+                    image1.style.backgroundImage = `url(${data.images[1]})`;
+                }
+                console.log()
+            }
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>

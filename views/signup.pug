@@ -1,0 +1,59 @@
+extends layout.pug
+
+block content
+    section#content
+    h2 Sign Up Now!
+    div
+        label name
+                input(id="name",name="name",placeholder="user name",required)
+    div
+        label email
+            input(id="email",type="email",name="email",placeholder="user email",required)
+    div
+        label password
+            input(id="password",type="password",name="password",placeholder="password",required)
+    if error
+        p= error
+    button(type="button" onclick="postData()") Sign Up
+    button(type="reset") Reset
+    
+    script.
+        function postData(){
+            let name = document.querySelector("#name").value;
+            let email = document.querySelector("#email").value;
+            let password = document.querySelector("#password").value;
+            let data = {
+                name: name,
+                email: email,
+                password: password,
+                provider: "native"
+            }
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST","/user/signup");
+            xhr.setRequestHeader("content-Type", "application/json");
+            xhr.send(JSON.stringify(data));
+        }
+        //- not sure why fetch won't work, test again when signin done
+        //- let proxy = "https://cors-anywhere.herokuapp.com/";
+        //- let url = `localhost:3000/user/signup`;
+        //- let url = "http://13.59.184.2/user/signup";
+        //- function postData(){
+        //-     fetch(url,{
+        //-         method:"POST",
+        //-         body:data,
+        //-         mode: "cors",
+        //-         headers: new Headers({
+        //-             "Content-Type":"application/json"
+        //-         })
+        //-     })
+        //-     .then((res)=>{
+        //-         res.json()
+        //-     })
+        //-     .catch((error)=>{
+        //-         console.error("error:",error)
+        //-     })
+        //-     .then((response)=>{
+        //-             console.log("success:", response)
+        //-     })
+        //- }
+        

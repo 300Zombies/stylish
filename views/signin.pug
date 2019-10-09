@@ -1,0 +1,147 @@
+extends layout.pug
+
+block content
+    section#content
+    h2 Sign In Now!
+    div
+        label email
+            input(id="email",type="email",name="email",placeholder="user email",required)
+    div
+        label password
+            input(id="password",type="password",name="password",placeholder="password",required)
+    if error
+        p= error
+    button(type="button" onclick="postData()") Sign In
+    button(type="reset") Reset
+    br
+    fb:login-button(scope="public_profile,email" onlogin="checkLoginState();")
+
+    div(id="status")
+
+    script.
+        function postData(){
+            let email = document.querySelector("#email").value;
+            let password = document.querySelector("#password").value;
+            let data = {
+                email: email,
+                password: password,
+                provider: "native",
+            }
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST","/user/signin");
+            xhr.setRequestHeader("content-Type", "application/json");
+            xhr.send(JSON.stringify(data));
+            //- window.location.href = "localhost:3000/user/profile";
+            //- window.location = "http://13.59.184.2/user/profile";
+        }
+
+        //- This is called with the results from from FB.getLoginStatus().
+        function statusChangeCallback(response) {
+            console.log('statusChangeCallback');
+            console.log(response);
+            //- The response object is returned with a status field that lets the
+            //- app know the current login status of the person.
+            //- Full docs on the response object can be found in the documentation
+            //- for FB.getLoginStatus().
+            if (response.status === 'connected') {
+            //- Logged into your app and Facebook.
+
+            //- DO THINGS HERE
+            console.log(response.authResponse.accessToken);
+            let data = {
+                token: response.authResponse.accessToken,
+                provider: "facebook",
+            }
+            //- SEND REQ BODY TO BACKEND
+            
+            let xhr = new XMLHttpRequest();
+            xhr.open("POST","/user/signin");
+            xhr.setRequestHeader("content-Type", "application/json");
+            xhr.send(JSON.stringify(data));
+            //- Do things end
+            testAPI();
+            } else {
+            //- The person is not logged into your app or we are unable to tell.
+            document.getElementById('status').innerHTML = 'Please log ' +
+                'into this app.';
+            }
+        }
+
+        //- This function is called when someone finishes with the Login
+        //- Button.  See the onlogin handler attached to it in the sample
+        //- code below.
+        function checkLoginState() {
+            FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+            });
+        }
+
+        window.fbAsyncInit = function() {
+            FB.init({
+            appId      : '796746667340492',
+            cookie     : true,  //- enable cookies to allow the server to access 
+                                //- the session
+            xfbml      : true,  //- parse social plugins on this page
+            version    : 'v3.3' //- The Graph API version to use for the call
+            });
+
+            //- Now that we've initialized the JavaScript SDK, we call 
+            //- FB.getLoginStatus().  This function gets the state of the
+            //- person visiting this page and can return one of three states to
+            //- the callback you provide.  They can be:
+            //-
+            //- 1. Logged into your app ('connected')
+            //- 2. Logged into Facebook, but not your app ('not_authorized')
+            //- 3. Not logged into Facebook and can't tell if they are logged into
+            //-    your app or not.
+            //-
+            //- These three cases are handled in the callback function.
+
+            FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+            });
+
+        };
+
+        //- Load the SDK asynchronously
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        //- Here we run a very simple test of the Graph API after login is
+        //- successful.  See statusChangeCallback() for when this call is made.
+        function testAPI() {
+            console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function(response) {
+            console.log('Successful login for: ' + response.name);
+            document.getElementById('status').innerHTML =
+                'Thanks for logging in, ' + response.name + '!';
+            });
+        }
+        //- not sure why fetch won't work, test again when signin done
+        //- let proxy = "https://cors-anywhere.herokuapp.com/";
+        //- let url = `localhost:3000/user/signup`;
+        //- let url = "http://13.59.184.2/user/signup";
+        //- function postData(){
+        //-     fetch(url,{
+        //-         method:"POST",
+        //-         body:data,
+        //-         mode: "cors",
+        //-         headers: new Headers({
+        //-             "Content-Type":"application/json"
+        //-         })
+        //-     })
+        //-     .then((res)=>{
+        //-         res.json()
+        //-     })
+        //-     .catch((error)=>{
+        //-         console.error("error:",error)
+        //-     })
+        //-     .then((response)=>{
+        //-             console.log("success:", response)
+        //-     })
+        //- }

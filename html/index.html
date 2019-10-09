@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stylish with npm install</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <!-- local reference route depends on app.use(express.static('public')); -->
+    <link rel="stylesheet" href="./css/index.css">
+
+</head>
+
+<body>
+    <nav>
+        <div class="nav-left">
+            <a href="/index.html">
+                <div class="logo"></div>
+            </a>
+            <ul class="category">
+                <li class="cate-1">女裝</li>
+                <li style="width:50px">|</li>
+                <li class="cate-2">男裝</li>
+                <li style="width:50px">|</li>
+                <li class="cate-3">配件</li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="search">
+
+            </div>
+            <div class="cart"></div>
+            <a href="/profile.html">
+                <div class="login"></div>
+            </a>
+        </div>
+    </nav>
+    <section class="charcoal-grey"></section>
+    <header>
+        <!-- <div>
+            Hello Stylish
+        </div> -->
+    </header>
+    <section class="product-section">
+        <div class="products-container">
+            <!-- <div class="product">
+                <a href="/product?id=1">
+                    <div class="image"></div>
+                </a>
+                <div class="color-container">
+                    <div class="color"></div>
+                    <div class="color"></div>
+                </div>
+                <div class="title">後鬆緊牛仔落地寬褲</div>
+                <div class="price">TWD.590</div>
+            </div> -->
+        </div>
+    </section>
+    <footer>
+        <div class="footer-wrap">
+            <ul class="footer-left">
+                <li>關於 Stylish</li>
+                <li style="width:5px; margin-left:25px; margin-right: 15px">|</li>
+                <li>服務條款</li>
+                <li class="break">|</li>
+                <li>隱私政策</li>
+                <li class="break">|</li>
+                <li>聯絡我們</li>
+                <li class="break">|</li>
+                <li>FAQ</li>
+            </ul>
+            <ul class="footer-right">
+                <li class="line"></li>
+                <li class="twitter"></li>
+                <li class="facebook"></li>
+                <li class="copy-right">&copy; 2019. Allrights reserved</li>
+            </ul>
+        </div>
+    </footer>
+    <!-- <script src="../public/javascript/script.js"></script> -->
+    <script>
+        const url = "/api/1.0/products/allproduct";
+
+        const container = document.querySelector(".products-container");
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText).data;
+                console.log(data)
+                for (let i = 0; i < data.length; i++) {
+                    // create product * i
+                    const product = document.createElement("div");
+                    product.classList.add("product");
+                    const link = document.createElement("a");
+                    link.href = `/product.html?id=${i+1}`;
+                    // create image * i
+                    const image = document.createElement("div")
+                    image.classList.add("image");
+                    image.style.backgroundImage = `url(${data[i]["main_image"]})`
+                    // create colorContainer * i
+                    const colorContainer = document.createElement("div")
+                    colorContainer.classList.add("color-container");
+                    for (let j = 0; j < data[i].colors.length; j++) {
+                        // create color square * j
+                        const color = document.createElement("div");
+                        color.classList.add("color");
+                        color.style.backgroundColor = `#${data[i]["colors"][j]["color_code"]}`;
+                        // append color square *j into colorContainer
+                        colorContainer.appendChild(color);
+                    }
+                    // create title * i
+                    const title = document.createElement("div")
+                    title.classList.add("title");
+                    title.innerText = data[i]["title"];
+                    // create price * i
+                    const price = document.createElement("div")
+                    price.classList.add("price");
+                    price.innerText = `TWD.${data[i]["price"]}`;
+                    // append everything into product
+                    link.appendChild(image);
+                    product.appendChild(link);
+                    product.appendChild(colorContainer);
+                    product.appendChild(title);
+                    product.appendChild(price);
+                    // append product in to container
+                    container.appendChild(product);
+                }
+            }
+        }
+        xhr.send();
+    </script>
+</body>
+
+</html>
